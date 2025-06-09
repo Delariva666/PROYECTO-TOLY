@@ -28,10 +28,15 @@ public class Toly : MonoBehaviour
     {
         if (collisiones.IsDead)
         {
-            mover.InputMoveEnable = true;
+            mover.InputMoveEnable = false;
             Debug.Log("Movimiento deshabilitado");
             animaciones.Death();
 
         }
+    }
+
+    public void DisableMovement()
+    {
+        mover.InputMoveEnable = false;
     }
 }

@@ -1,5 +1,7 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Collisiones : MonoBehaviour
 {
@@ -11,6 +13,12 @@ public class Collisiones : MonoBehaviour
     private int currentHealth; // Salud actual
     public float recoveryTime = 1.5f; // Tiempo de recuperación tras cada colisión
     private bool canCollide = true; // Controla si el jugador puede colisionar
+    public Image[] corazones; // Arreglo de imágenes (corazones)
+    public Sprite corazonLleno;
+    public Sprite corazonVacio;
+    public GameObject gameOverPanel;
+
+
 
     public bool IsDead => currentHealth <= 0; // Verifica si el jugador está muerto
 
@@ -59,13 +67,14 @@ public class Collisiones : MonoBehaviour
             StartCoroutine(HandleCollision());
         }
     }
-    
-    
+
+
 
     private IEnumerator HandleCollision()
     {
         canCollide = false; // Desactiva colisiones adicionales durante el tiempo de recuperación
         currentHealth--; // Reduce la salud en 1
+        ActualizarCorazones();
 
         Debug.Log($"¡Colisión con enemigo! Salud restante: {currentHealth}");
 
@@ -89,14 +98,53 @@ public class Collisiones : MonoBehaviour
         {
             gameObject.layer = LayerMask.NameToLayer("PlayerDead");
             Debug.Log("¡El jugador ha muerto!");
+            // Desactivar movimiento
+            toly.DisableMovement();
+            // 🔴 Mostrar el panel de Game Over
+            if (gameOverPanel != null)
+            {
+                gameOverPanel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning("GameOverPanel no está asignado en el Inspector.");
+            }
+            // Inicia el reinicio de escena
+            StartCoroutine(RestartScene());
         }
     }
     public void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerHit playerHit = collision.GetComponent<PlayerHit>();
-        if(playerHit != null)
+        if (playerHit != null)
         {
             playerHit.Hit();
         }
     }
+
+    private IEnumerator RestartScene()
+    {
+        // Espera 2 segundos antes de reiniciar
+        yield return new WaitForSeconds(2f);
+
+        // Reinicia la escena actual
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    private void ActualizarCorazones()
+{
+    for (int i = 0; i < corazones.Length; i++)
+    {
+        if (i < currentHealth)
+        {
+            corazones[i].sprite = corazonLleno;
+        }
+        else
+        {
+            corazones[i].sprite = corazonVacio;
+        }
+    }
+}
+
+
 }

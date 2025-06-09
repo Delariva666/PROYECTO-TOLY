@@ -39,11 +39,12 @@ public class Mover : MonoBehaviour
     void Update()
     {
         // Desactiva el movimiento si la vida llega a 0
-        if (collisiones != null && collisiones.maxHealth <= 0)
+        if (collisiones != null && collisiones.IsDead)
         {
             InputMoveEnable = false;
             return;
         }
+
 
         if (Input.GetKeyDown(KeyCode.C))
         {

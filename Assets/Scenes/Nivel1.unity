@@ -10911,8 +10911,16 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 128
-  maxHealth: 5
+  maxHealth: 4
   recoveryTime: 1.5
+  corazones:
+  - {fileID: 167961064}
+  - {fileID: 1408456578}
+  - {fileID: 84863774}
+  - {fileID: 76521136}
+  corazonLleno: {fileID: 21300000, guid: 5b20634e0b0e28c43bde743a3fe446dd, type: 3}
+  corazonVacio: {fileID: 21300000, guid: d4f3a809053fe5641805affc387c1a89, type: 3}
+  gameOverPanel: {fileID: 585621652}
 --- !u!70 &1846951732
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -11854,7 +11862,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2017913035
 Transform:
   m_ObjectHideFlags: 0
