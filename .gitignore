@@ -1,0 +1,12 @@
+gitignore
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild*/
+[Ll]ogs/
+MemoryCaptures/
+*.csproj
+*.sln
+*.user
+.vscode/
+
