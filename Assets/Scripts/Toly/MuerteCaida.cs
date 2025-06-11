@@ -9,13 +9,15 @@ public class MuerteCaida : MonoBehaviour
     private bool isRestarting = false;      // Evita múltiples ejecuciones
 
     void OnCollisionEnter2D(Collision2D collision)
+{
+    if (collision.gameObject.CompareTag("Player") && !isRestarting)
     {
-        if (collision.gameObject.CompareTag("Player") && !isRestarting)
-        {
-            isRestarting = true;
-            StartCoroutine(HandlePlayerFall(collision.gameObject));
-        }
+        isRestarting = true;
+        StartCoroutine(HandlePlayerFall(collision.gameObject));
     }
+}
+
+
 
     private IEnumerator HandlePlayerFall(GameObject player)
     {
@@ -53,6 +55,16 @@ public class MuerteCaida : MonoBehaviour
 
         // Si no hay más vidas, el PlayerHealth se encarga de llamar a Die()
     }
+
+    void Update()
+    {
+        if (!isRestarting && transform.position.y < -12f) // Ajusta el valor -10 según tu nivel
+        {
+            isRestarting = true;
+            StartCoroutine(HandlePlayerFall(gameObject));
+        }
+    }
+
 }
 
 
